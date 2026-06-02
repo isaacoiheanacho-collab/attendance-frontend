@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="container">
+    <div class="success-card">
+      <h1>✔️ Attendance Recorded</h1>
+      <button id="scanAgainBtn">Scan Next Member</button>
+    </div>
+  </div>
+  <script type="module" src="js/success.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/js/serviceWorker.js');
+    }
+  </script>
+</body>
+</html>
