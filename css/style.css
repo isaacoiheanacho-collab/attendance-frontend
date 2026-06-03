@@ -59,6 +59,16 @@ button.logout:hover {
   background: #dc2626;
 }
 
+/* Reject button styles */
+button.reject {
+  background: #ef4444;
+  margin-top: 8px;
+}
+
+button.reject:hover {
+  background: #dc2626;
+}
+
 .error {
   color: #dc2626;
   text-align: center;

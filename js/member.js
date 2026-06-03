@@ -112,4 +112,11 @@ document.getElementById('confirmBtn').addEventListener('click', async () => {
   }
 });
 
+// ✅ Reject button – simply return to dashboard without recording attendance
+document.getElementById('rejectBtn').addEventListener('click', () => {
+  if (confirm('Reject this attendance record? The member will not be marked as present.')) {
+    window.location.href = 'dashboard.html';
+  }
+});
+
 loadMember();
