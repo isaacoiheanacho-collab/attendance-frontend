@@ -21,6 +21,17 @@ console.log('regNumber from URL:', regNumber);
 
 let memberId = null;
 
+// Function to update the attendance date/time display
+function updateAttendanceDateTime() {
+  const now = new Date();
+  const formattedDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY
+  const formattedTime = now.toLocaleTimeString('en-GB'); // HH:MM:SS
+  const dateTimeElement = document.getElementById('attendanceDateTime');
+  if (dateTimeElement) {
+    dateTimeElement.textContent = `⏰ Check-in time: ${formattedDate} at ${formattedTime}`;
+  }
+}
+
 async function loadMember() {
   try {
     const url = `${API_BASE}/members/${regNumber}`;
@@ -45,6 +56,10 @@ async function loadMember() {
     } else {
       img.style.display = 'none';
     }
+    
+    // Display current date/time for attendance
+    updateAttendanceDateTime();
+    
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -89,6 +104,9 @@ uploadBtn.addEventListener('click', async () => {
 
 document.getElementById('confirmBtn').addEventListener('click', async () => {
   try {
+    // Refresh the displayed timestamp before recording
+    updateAttendanceDateTime();
+    
     const device_id = navigator.userAgent || 'unknown-device';
     const res = await fetch(`${API_BASE}/attendance`, {
       method: 'POST',
@@ -120,3 +138,6 @@ document.getElementById('rejectBtn').addEventListener('click', () => {
 });
 
 loadMember();
+
+// Optional: Update the date/time display every second (if you want a live clock)
+// setInterval(updateAttendanceDateTime, 1000);
