@@ -1,4 +1,4 @@
-const CACHE_NAME = 'attendance-pwa-v2';  // Incremented version to force cache update
+const CACHE_NAME = 'attendance-pwa-v3';  // Incremented version
 const urlsToCache = [
   '/',
   '/index.html',
@@ -29,4 +29,13 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => response || fetch(event.request))
   );
+});
+
+// Handle messages from the main thread (for session persistence)
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SAVE_TOKEN') {
+    caches.open('auth').then(cache => {
+      cache.put('/session', new Response(JSON.stringify({ token: event.data.token })));
+    });
+  }
 });

@@ -26,16 +26,24 @@ async function checkToken() {
 checkToken().then(isValid => {
   if (!isValid) return;
 
-  // Search member – redirect without .html to preserve query string
+  // Search member
   document.getElementById('searchBtn').addEventListener('click', () => {
     let reg = document.getElementById('regNumber').value.trim();
     if (!reg) return alert('Enter registration number');
-    reg = reg.toUpperCase();  // Force uppercase for case-insensitive DB match
-    window.location.href = `member?reg=${encodeURIComponent(reg)}`;  // ✅ no .html
+    reg = reg.toUpperCase();
+    window.location.href = `member?reg=${encodeURIComponent(reg)}`;
   });
 
-  // Logout
-  document.getElementById('logoutBtn').addEventListener('click', () => {
+  // Logout with API call to clear session
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+      await fetch(`${API_BASE}/auth/logout`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
     localStorage.removeItem('token');
     window.location.href = 'index.html';
   });
